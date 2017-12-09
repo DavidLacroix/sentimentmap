@@ -48,7 +48,7 @@ class SentimentTweetParser():
             id = tweet['id_str']
             country_code = tweet['place']['country_code']
             created_at = datetime.datetime.fromtimestamp(int(tweet['timestamp_ms'])/1000.0)
-            coordinate, coordinate_accuracy = self.extract_location(tweet)
+            coordinate, coordinate_accuracy = self.extract_location(tweet).values()
             neg, neu, pos, compound = self.analyse_sentiment(text).values()
             if neu == 1: raise ValueError("Sentiment is neutral only")
         except ValueError as e:
