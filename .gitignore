@@ -2,3 +2,4 @@
 .project
 .pydevproject
 env_helper.txt
+__pycache__/
