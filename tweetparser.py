@@ -19,8 +19,8 @@ class SentimentTweetParser():
         # Coordinate as [lon, lat]
         location = {'coordinate': [], 'accuracy': 0}
         # Actual precise geolocation
-        if tweet['geo']:
-            location['coordinate'] = tweet['geo']['coordinates']
+        if tweet['coordinates']:
+            location['coordinate'] = tweet['coordinates']['coordinates']
             location['accuracy'] = 1
         # Estimate from 'Place' feature
         else:
@@ -51,13 +51,13 @@ class SentimentTweetParser():
             coordinate, coordinate_accuracy = self.extract_location(tweet).values()
             neg, neu, pos, compound = self.analyse_sentiment(text).values()
             if neu == 1: raise ValueError("Sentiment is neutral only")
-        except ValueError as e:
+        except (TypeError, ValueError) as e:
             print("Tossing tweet: {}".format(e))
             return None
         
         return {
             'type': "Feature",
-            'property': {
+            'properties': {
                 'text': text,
                 'id': id,
                 'country_code': country_code,
