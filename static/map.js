@@ -40,12 +40,12 @@ function on_each_feature(feature, layer) {
     }
 }
 
-function search_tweet(search){
+function search_tweet(search, accuracy){
     var SW = mymap.getBounds().getSouthWest();
     var NE = mymap.getBounds().getNorthEast();
     $.ajax({
         url: 'tweet',
-        data: {'search': search, 'SWlon': SW.lng, 'SWlat': SW.lat, 'NElon': NE.lng, 'NElat': NE.lat},
+        data: {'search': search, 'accuracy': accuracy,'SWlon': SW.lng, 'SWlat': SW.lat, 'NElon': NE.lng, 'NElat': NE.lat},
         dataType: 'json',
         type: 'GET',
         success: function(data) {
@@ -77,10 +77,15 @@ $('#search-tweet').click(function() {
     $(this).prop('disabled', true);
     data_group.clearLayers();
     var search = $("#search-tweet-input").val();
-    search_tweet(search);
+    var accuracy = $("#search-accuracy").find("option:selected").val();
+    search_tweet(search, accuracy);
 });
 
 $('#reset').click(function() {
     data_group.clearLayers();
     mymap.setView([53.5, -6], 6);
 });
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip();
+})
