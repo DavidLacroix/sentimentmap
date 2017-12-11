@@ -71,7 +71,7 @@ function search_tweet(search, accuracy){
             for (i in data){
                 record = data[i];
                 
-                if(record['properties']['compound'] > 0){
+                if(record.properties.compound > 0){
                     L.geoJSON(record, {
                         onEachFeature: on_each_feature,
                         pointToLayer: function (feature, latlng) {
