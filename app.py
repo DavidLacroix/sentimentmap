@@ -24,7 +24,7 @@ def tweet():
         mongo_db = mongo_client['sentiment_db']
         mongo_collection = mongo_db['tweets']
         
-        query = {
+        data_query = {
             'properties.geometry_accuracy' : {'$gt' : accuracy},
             #'properties.text': {'$regex': search},
             '$text': {'$search': search},
@@ -37,16 +37,32 @@ def tweet():
                }
             }
         }
-        data = []
         
-        cursor = mongo_collection.find(query)
-        for record in cursor:
+        stats_query = [{'$match': data_query},
+            {'$group':{
+                '_id': "all", 
+                'total':{'$sum': 1},
+                'mean_pos': {'$avg': "$properties.pos"},
+                'mean_neg': {'$avg': "$properties.neg"},
+                'mean_compound': {'$avg': "$properties.compound"},
+                'pop_std_dev': { '$stdDevPop': "$properties.compound" }
+            }}
+        ]
+        
+        response = {'data': [], 'stats': {}}
+        
+        data_cursor = mongo_collection.find(data_query)
+        for record in data_cursor:
             record['_id'] = str(record['_id'])
-            data.append(record)
-            
+            response['data'].append(record)
+        
+        stats_cursor = mongo_collection.aggregate(stats_query)
+        
+        response['stats'] = next(stats_cursor, {})
+                
         mongo_client.close()
         
-        return jsonify(data)
+        return jsonify(response)
   
 
 if __name__ == "__main__":

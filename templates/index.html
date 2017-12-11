@@ -9,6 +9,48 @@
     <link rel="stylesheet" href="{{url_for('static', filename='leaflet-minimap/Control.MiniMap.min.css')}}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     
+</head>
+<body>
+    <div id="header" class="container-fluid">
+        <div class="row align-items-center justify-content-between"> 
+            <div class="col-4"><p class="display-4">< how's the mood ></p></div>
+            <div class="col-6">
+               <form class="form-inline justify-content-center" role="form">
+                  <label class="sr-only" for="inlineFormInput">accuracy</label>
+                  <button id="search-tweet" type="button" class="btn btn-secondary">search tweet</button>
+                  <select id="search-accuracy" data-toggle="tooltip" data-placement="bottom" title="tweet accuracy" class="custom-select" id="inlineFormCustomSelect">
+                        <option value="0" selected="selected">city</option>
+                        <option value="0.8">gps</option>
+                  </select>
+                  <label class="sr-only" for="inlineFormInput">search</label>
+                  <input id="search-tweet-input" type="text" class="form-control" placeholder="Search for...">
+                  
+                  <label class="sr-only" for="inlineFormInput">actions</label>
+                  <div class="btn-group ml-5" role="group">
+                      <button id="info" type="button" data-trigger="focus" class="btn btn-success" data-toggle="popover" title="Popover titlePopover titlePopover titlePopover titlePopover title" data-content="And here's some amazing content. It's very engaging. Right? It's very engaging. Right? It's very engaging. Right? It's very engaging. Popover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titleRight? It's very engaging. Right? It's very engaging. Right? It's very engaging. Right? It's very engaging. Right?">info</button>
+                      <button id="reset" type="button" class="btn btn-outline-danger">reset</button>
+                  </div>
+                </form>
+                        
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <div id="mapid" class="container-fluid">
+    </div>
+    <div id="footer" class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col">
+                <small class="text-muted">Clumsily made by <a href="https://github.com/DavidLacroix/sentimentmap">David Lacroix</a></small>
+            </div>
+        </div>
+        
+    </div>
+    
+    
+    <script src="{{url_for('static', filename='plotly-latest.min.js')}}"></script>
     <script src="{{url_for('static', filename='leaflet/leaflet.js')}}"></script>
     <script src="{{url_for('static', filename='leaflet-minimap/Control.MiniMap.min.js')}}"></script>
     <script src="{{url_for('static', filename='leaflet-heat/leaflet-heat.js')}}"></script>
@@ -16,38 +58,6 @@
     <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-    
-</head>
-<body>
-    <div id="header" class="container-fluid">
-        <div class="row align-items-center justify-content-between"> 
-            <div class="col-4"><p class="display-4">< how's the mood ></p></div>
-            <div class="col-5">
-                <div class="row justify-content-end">
-                    <div class="col">
-                          <form class="form-inline">
-                              <select id="search-accuracy" data-toggle="tooltip" data-placement="bottom" title="location accuracy" class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect">
-                                    <option value="0" selected="selected">city</option>
-                                    <option value="0.8">gps</option>
-                              </select>
-                              <button id="search-tweet" type="button" class="btn btn-secondary">search tweet</button>
-                              <input id="search-tweet-input" type="text" class="form-control" placeholder="Search for...">                              
-                          </form>
-                    </div>
-                    <div class="col-2">
-                        <button id="reset" type="button" class="btn btn-outline-danger">reset</button>
-                    </div>
-                </div>
-                
-            </div>
-            
-        </div>
-    </div>
-    <div id="mapid" class="container-fluid"></div>
-    <div id="footer" class="container-fluid">
-        <small class="text-muted">Clumsily made by <a href="https://github.com/DavidLacroix/sentimentmap">David Lacroix</a></small>
-    </div>
-    
     
     <script type="text/javascript" src="{{url_for('static', filename='map.js')}}"></script>
 </body>
