@@ -3,9 +3,10 @@ from pymongo.errors import PyMongoError
 from pymongo import MongoClient
 import os
 import traceback
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 app = Flask(__name__)
-
+analyser = SentimentIntensityAnalyzer()
 
 @app.route('/')
 def index():
@@ -51,7 +52,7 @@ def tweet():
         
         response = {'data': [], 'stats': {}}
         
-        data_cursor = mongo_collection.find(data_query)
+        data_cursor = mongo_collection.find(data_query).limit(10000) #threeshold to avoid blowing up leaflet
         for record in data_cursor:
             record['_id'] = str(record['_id'])
             response['data'].append(record)
@@ -59,6 +60,9 @@ def tweet():
         stats_cursor = mongo_collection.aggregate(stats_query)
         
         response['stats'] = next(stats_cursor, {})
+        
+        search_sentiment = analyser.polarity_scores(search)
+        response['stats']['search_sentiment'] = search_sentiment
                 
         mongo_client.close()
         

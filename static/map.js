@@ -36,25 +36,28 @@ var neg_marker_options = {
     fillOpacity: 0.4
 };
 
+function create_sentiment_bar(pos, neu, neg, min_score_display){
+    var str_pos = Math.round(pos * 100) > min_score_display ? Math.round(pos * 10000) / 100 : "";
+    var str_neu = Math.round(neu * 100) > min_score_display ? Math.round(neu * 10000) / 100 : "";
+    var str_neg = Math.round(neg * 100) > min_score_display ? Math.round(neg * 10000) / 100 : "";
+    
+    var sentiment_bar = `
+        <div style="height: 22px; width: 100%;">
+            <div class="bg-success" style="float: left; height: 100%; width: ${Math.round(pos * 98)}%; border: solid 2px white; border-radius: 6px; text-align: center;font-weight: bold;">${str_pos}</div>
+            <div class="bg-warning" style="float: left; height: 100%; width: ${Math.round(neu * 98)}%; border: solid 2px white; border-radius: 6px; text-align: center;font-weight: bold;">${str_neu}</div>
+            <div class="bg-danger" style="float: left; height: 100%; width: ${Math.round(neg * 98)}%; border: solid 2px white; border-radius: 6px; text-align: center;font-weight: bold;">${str_neg}</div>
+        </div>
+    `;
+    return sentiment_bar;
+}
+
 function on_each_feature(feature, layer) {
     if (feature.properties && feature.properties.text) {
         var pos = feature.properties.pos;
         var neu = feature.properties.neu;
         var neg = feature.properties.neg;
         
-        var str_pos = Math.round(pos * 100) > 10 ? Math.round(pos * 10000) / 100 : "";
-        var str_neu = Math.round(neu * 100) > 10 ? Math.round(neu * 10000) / 100 : "";
-        var str_neg = Math.round(neg * 100) > 10 ? Math.round(neg * 10000) / 100 : "";
-        
-        var sentiment_bar = `
-            <div style="height: 22px; width: 100%;">
-                <div class="bg-success" style="float: left; height: 100%; width: ${Math.round(pos * 98)}%; border: solid 2px white; border-radius: 6px; text-align: center;font-weight: bold;">${str_pos}</div>
-                <div class="bg-warning" style="float: left; height: 100%; width: ${Math.round(neu * 98)}%; border: solid 2px white; border-radius: 6px; text-align: center;font-weight: bold;">${str_neu}</div>
-                <div class="bg-danger" style="float: left; height: 100%; width: ${Math.round(neg * 98)}%; border: solid 2px white; border-radius: 6px; text-align: center;font-weight: bold;">${str_neg}</div>
-            </div>
-        `;
-        
-        layer.bindPopup(sentiment_bar + '<span style="font-weight: bold">' + feature.properties.created_at + '</span></br>' + feature.properties.text);
+        layer.bindPopup(create_sentiment_bar(pos, neu, neg, 10) + '<span style="font-weight: bold">' + feature.properties.created_at + '</span></br>' + feature.properties.text);
     }
 }
 
@@ -101,6 +104,7 @@ function search_tweet(search, accuracy){
 function feed_info_popover(search, stats){
     $('#info').attr('data-original-title', 'Info for search: "<i>'+search+'</i>"');
     var html_content = `
+        ${create_sentiment_bar(stats.search_sentiment.pos, stats.search_sentiment.neu, stats.search_sentiment.neg, 20)}
         <table class="table table-sm">
           <tbody>
             <tr>
