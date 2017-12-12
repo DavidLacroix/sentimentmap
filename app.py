@@ -28,7 +28,7 @@ def tweet():
         data_query = {
             'properties.geometry_accuracy' : {'$gt' : accuracy},
             #'properties.text': {'$regex': search},
-            '$text': {'$search': search},
+            '$text': {'$search': '"' + search + '"'},
             'geometry': {
                '$geoWithin': {
                   '$box': [
