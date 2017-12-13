@@ -13,8 +13,9 @@
 <body>
     <div id="header" class="container-fluid">
         <div class="row align-items-center justify-content-between"> 
-            <div class="col-4"><p class="display-4">< how's the mood ></p></div>
-            <div class="col-6">
+            <div class="col-5"><p class="display-4">< how's the mood ></p></div>
+            
+            <div class="col-7">
                <form class="form-inline justify-content-center" role="form">
                   <label class="sr-only" for="inlineFormInput">accuracy</label>
                   <button id="search-tweet" type="button" class="btn btn-secondary">search tweet</button>
@@ -24,10 +25,11 @@
                   </select>
                   <label class="sr-only" for="inlineFormInput">search</label>
                   <input id="search-tweet-input" type="text" class="form-control" placeholder="Search for...">
+                  <button id="info" type="button"  class="btn btn-primary" data-trigger="focus" data-toggle="popover" title="" data-content="">details</button>
                   
                   <label class="sr-only" for="inlineFormInput">actions</label>
                   <div class="btn-group ml-5" role="group">
-                      <button id="info" type="button" data-trigger="focus" class="btn btn-success" data-toggle="popover" title="Popover titlePopover titlePopover titlePopover titlePopover title" data-content="And here's some amazing content. It's very engaging. Right? It's very engaging. Right? It's very engaging. Right? It's very engaging. Popover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titlePopover titleRight? It's very engaging. Right? It's very engaging. Right? It's very engaging. Right? It's very engaging. Right?">info</button>
+                      <button class="btn btn-outline-success" type="button" data-toggle="collapse" data-target="#collapseHelp" aria-expanded="false" aria-controls="collapseHelp">help</button>
                       <button id="reset" type="button" class="btn btn-outline-danger">reset</button>
                   </div>
                 </form>
@@ -38,12 +40,20 @@
             
         </div>
     </div>
-    <div id="mapid" class="container-fluid">
+    <div class="collapse" id="collapseHelp">
+        <div class="card card-block m-3 pt-2 pl-3">
+            <h4>How does it works ?</h4>
+            <p>Search for keywords and see (try "christmas" or "trump" for example). Each point is a tweet, each tweet is ranked as positive or negative. <a href="http://comp.social.gatech.edu/papers/icwsm14.vader.hutto.pdf">VADER</a> is an algorithm that computes the sentiment expressed in a sentence (positive, neutral, negative). Each category is a number between 0 and 1 (1 being the maximum intensity). When doing a search keep in mind that the keywords you use have a polarity themselves. It is without surprises that searching for "hate" will return a majority of negative results (pay attention to the positive tweets in that case!). Choosing the scope 'gps' option will only show precisely geolocated tweets; when using 'city' scope, the tweet was indeed posted within the city boundary but the point accuracy is not guaranteed.</p>
+        </div>
     </div>
-    <div id="footer" class="container-fluid">
-        <div class="row align-items-center">
-            <div class="col">
-                <small class="text-muted">Clumsily made by <a href="https://github.com/DavidLacroix/sentimentmap">David Lacroix</a></small>
+    <div id="mapid" class="container-fluid">
+    
+    </div>
+    <div id="footer" class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-auto">
+                <p></p>
+                <p><small class="text-muted">a tribute to all the beautiful data in the world - made by <a href="https://github.com/DavidLacroix/sentimentmap">David Lacroix</a></small></p>
             </div>
         </div>
         
